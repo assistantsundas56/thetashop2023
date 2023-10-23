@@ -1,0 +1,91 @@
+﻿@model IList<Item>
+
+
+
+<h1>
+    Total Items: @Model.Count Active: @Model.Where(a=>a.Status ==  "Active").Count()
+</h1>
+
+
+
+<a href="/Items/Create">Add New Item</a>
+
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Short Description
+            </th>
+            <th>
+                Long Des
+            </th>
+
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+
+
+    <tbody>
+        @foreach (Item P in Model)
+        {
+
+
+            <tr class="text-success">
+                <td>
+
+                    @{
+                        string FinalImagePath = "/data/items/default.jpg";
+                        if (P.Images != null)
+                        {
+                            string[] AllImages = P.Images.Split(",");
+                            FinalImagePath = AllImages[0];
+                        }
+
+
+                    }
+
+
+
+
+
+                    <img src="@FinalImagePath" class="img-thumbnail" style="max-height:100px;" alt="" />
+                </td>
+                <td>
+                    @P.Id
+                </td>
+                <td>
+                    @P.Name
+                </td>
+                <td>
+                    @P.ShortDescription
+                </td>
+                <td>
+                    @P.LongDescription
+                </td>
+                <td>
+                    <a href="/Items/Detail?id=@P.Id" class="btn btn-info">Detail</a>
+                    <a href="/Items/Delete?id=@P.Id" class="btn btn-danger">Delete</a>
+
+                    <a href="/Items/Edit?id=@P.Id" class="btn btn-warning">Edit</a>
+                </td>
+            </tr>
+
+
+
+        }
+
+    </tbody>
+</table

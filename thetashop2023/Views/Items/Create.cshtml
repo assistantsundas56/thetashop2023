@@ -1,0 +1,29 @@
+﻿@model Item
+
+
+
+<h1>
+    Please fill the data for item
+</h1>
+
+
+
+<form method="post" asp-action="Create" asp-controller="Items" enctype="multipart/form-data">
+
+    <select asp-for="CategoryId" class="form-control">
+        <option value="1">Mobile</option>
+        <option value="2">Laptop</option>
+        <option value="3">Accessories</option>
+    </select>
+
+
+    <input type="text" asp-for="Name" class="form-control" />
+    <input type="text" asp-for="ShortDescription" class="form-control" />
+    <input type="text" asp-for="LongDescription" class="form-control" />
+
+    <input type="file" id="PImages" name="PImages" multiple class="form-control" />
+
+
+    <input type="submit" value="Submit" class="btn btn-primary" />
+
+</form>

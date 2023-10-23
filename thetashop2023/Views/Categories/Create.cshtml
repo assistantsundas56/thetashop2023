@@ -1,0 +1,36 @@
+﻿@model Category
+
+
+<h1>
+    @ViewBag.Message
+</h1>
+
+<form asp-action="Create" enctype="multipart/form-data" asp-controller="Categories" method="post">
+
+    <input type="text" asp-for="Name" value="" />
+    <input type="text" asp-for="Description" value="" />
+    <input type="file" id="CImage" name="CImage" value="" />
+
+
+    <input type="file" id="CV" name="CV" value="" />
+
+    <input type="submit" value="Save" />
+
+</form>
+
+
+
+@section ABC{
+
+    <script>
+
+        $(function () {
+
+            $('#Description').datepicker();
+
+
+
+        });
+
+    </script>
+}

@@ -1,0 +1,257 @@
+﻿@model IList<Category>
+
+
+
+<h1>
+    Total Categories: @Model.Count Active: @Model.Where(a=>a.Status ==  "Active").Count()
+</h1>
+    
+
+
+
+<h1>
+    This data is coming through .load function <span id="scc"></span>
+</h1>
+
+
+<a id="cc" href="#">Get Categoreis Count</a>
+
+<h1 id="ccdata"> 
+
+</h1>
+
+<a href="/Categories/Create">Add New Category</a>
+
+
+    <table class="table table-bordered">
+
+    <thead>
+    <tr>
+        <th>
+Image
+            </th>
+            <th>
+Id
+            </th>
+            <th>
+Name
+            </th>
+            <th>
+Description
+            </th>
+            <th>
+Status
+            </th>
+
+            <th>
+Actions
+            </th>
+    </tr>
+    </thead>
+
+
+    <tbody>
+    @foreach(Category C in Model)
+    {
+
+        @if(C.Status ==  "Active")
+        {
+             <tr  class="text-success">
+                    <td>
+                        <img src="@C.Image" class="img-thumbnail" style="max-height:100px;" alt="" />
+                    </td>
+            <td>
+                @C.Id
+            </td>
+            <td>
+                @C.Name
+            </td>
+            <td>
+                @C.Description
+            </td>
+            <td>
+                @C.Status
+            </td>
+             <td>
+                <a href="/Categories/Detail?id=@C.Id" class="btn btn-info">Detail</a>
+                 <a href="/Categories/Delete?id=@C.Id" class="btn btn-danger">Delete</a>
+                  
+ <a href="#" data-id="@C.Id" class="deletebutton btn btn-danger">Delete</a>
+                                 
+                 <a href="/Categories/Edit?id=@C.Id" class="btn btn-warning">Edit</a>
+            </td>
+            </tr>
+        }
+        else
+        {
+             <tr class="text-danger">
+<td>
+                        <img src="@C.Image" class="img-thumbnail" style="max-height:100px;" alt="" />
+                    </td>
+            <td>
+                @C.Id
+            </td>
+            <td>
+                @C.Name
+            </td>
+            <td>
+                @C.Description
+            </td>
+            <td>
+                @C.Status
+            </td>
+            <td>
+                <a href="/Categories/Detail?id=@C.Id" class="btn btn-info">Detail</a>@*<a*@
+                 href="/Categories/Delete?id=@C.Id" class="btn btn-danger">Delete</a>
+                  <a href="#" data-id="@C.Id" data-name="@C.Name" class="deletebutton btn btn-danger">Delete</a>
+                 <a href="/Categories/Edit?id=@C.Id" class="btn btn-warning">Edit</a>
+            </td>
+        </tr>
+        }
+
+    }
+
+    </tbody>
+    </table>
+
+
+
+<div id="MyTable">
+
+</div>
+
+
+
+    @section ABC{
+
+<script>
+     
+    
+
+    $(function(){
+
+
+
+        $("#scc").load("/Categories/GetCategoriesCount");
+
+        $("#MyTable").load("/Categories/GetTable");
+
+
+        $("#cc").click(function(){
+        
+        $.ajax({
+        
+        method:"GET",
+        url: "/Categories/GetCategoriesCount",
+        complete:function(abc){
+        console.log(abc);
+        $("#ccdata").html(abc.responseText);
+
+        
+        }
+        
+        
+        });
+        
+        
+        
+        
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    $(".deletebutton").click(function(){
+    var delbutton  = $(this);
+     var cid=   delbutton.data("id");
+     
+
+
+    $.ajax({
+
+    method:"POST",
+    url:"/Categories/DeleteAjax",
+    data:{
+    
+    id:cid
+    
+    
+    },
+complete:function(abc){
+
+    console.log(abc);
+    if(abc.responseText == "1")
+    {
+
+        delbutton.parent().parent().fadeOut(5000);
+    }
+    else{
+
+    }
+}
+
+    
+    
+    });
+
+    
+    });
+    
+    
+    });
+
+
+
+</script>
+
+    }
+
+
+
+
+
+
+
+
+
+   @* @section ABC{
+
+<script>
+
+$(function(){
+
+$("table").DataTable();
+
+
+$('nav').draggable();
+
+$("h1").click(function(){
+
+$("table").toggle();
+
+
+});
+
+
+});*@
+
+
+</script>
+
+    }
